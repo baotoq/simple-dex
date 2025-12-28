@@ -1,57 +1,110 @@
-# Sample Hardhat 3 Beta Project (`node:test` and `viem`)
+# Simple DEX - Learning Project
 
-This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
+A simple AMM-style DEX (Decentralized Exchange) built with Hardhat v3 to learn blockchain and smart contract development.
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+## Overview
 
-## Project Overview
+This project implements a basic constant product AMM (like Uniswap V1) with:
+- ERC-20 token contracts
+- Liquidity pools with LP tokens
+- Token swaps using the x*y=k formula
+- Factory pattern for pool creation
 
-This example project includes:
+## Tech Stack
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+- **Solidity** ^0.8.28 - Smart contract language
+- **Hardhat v3** - Development framework
+- **viem** - Ethereum interactions
+- **TypeScript** - Test language
 
-## Usage
+## Quick Start
 
-### Running Tests
+```bash
+# Install dependencies
+npm install
 
-To run all the tests in the project, execute the following command:
+# Compile contracts
+npx hardhat compile
 
-```shell
+# Run all tests (113 tests)
 npx hardhat test
-```
 
-You can also selectively run the Solidity or `node:test` tests:
-
-```shell
+# Run only Solidity tests (51 tests)
 npx hardhat test solidity
+
+# Run only TypeScript tests (62 tests)
 npx hardhat test nodejs
+
+# Start local blockchain
+npx hardhat node
 ```
 
-### Make a deployment to Sepolia
+## Project Structure
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
+```
+simple-dex/
+├── contracts/
+│   ├── tokens/
+│   │   ├── ERC20Base.sol       # Abstract base ERC-20
+│   │   ├── ERC20Base.t.sol     # Solidity tests
+│   │   ├── SimpleToken.sol     # Test token
+│   │   ├── LPToken.sol         # LP token
+│   │   └── LPToken.t.sol       # Solidity tests
+│   ├── core/
+│   │   ├── LiquidityPool.sol   # AMM logic
+│   │   └── LiquidityPool.t.sol # Solidity tests
+│   ├── Factory.sol             # Pool factory
+│   └── Factory.t.sol           # Solidity tests
+├── test/                       # TypeScript tests
+├── docs/                       # Concept guides
+└── hardhat.config.ts
 ```
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
+## Contracts
 
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
+| Contract | Description |
+|----------|-------------|
+| **ERC20Base** | Abstract base with transfer, approve, transferFrom |
+| **SimpleToken** | Test token that mints initial supply to deployer |
+| **LPToken** | LP token with pool-only mint/burn |
+| **LiquidityPool** | AMM with addLiquidity, removeLiquidity, swap |
+| **Factory** | Creates and tracks liquidity pools |
 
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
+## Testing
 
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
+This project demonstrates two testing approaches:
 
-After setting the variable, you can run the deployment with the Sepolia network:
+### Solidity Tests
+- Located alongside contracts (`*.t.sol`)
+- Uses Hardhat v3's native Solidity test runner
+- Includes fuzz testing with random inputs
 
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
+### TypeScript Tests
+- Located in `test/` folder (`*.test.ts`)
+- Uses Node.js native test runner (`node:test`)
+- Uses `viem` for contract interactions
+
+## Documentation
+
+See the `docs/` folder for concept explanations:
+- [01-amm-formula.md](docs/01-amm-formula.md) - x*y=k explained
+- [02-liquidity-provider.md](docs/02-liquidity-provider.md) - LP tokens
+- [03-approve-pattern.md](docs/03-approve-pattern.md) - Token spending
+- [04-slippage.md](docs/04-slippage.md) - Slippage protection
+- [05-testing-approaches.md](docs/05-testing-approaches.md) - Test comparison
+
+## Key Concepts
+
+- **ERC-20 Standard**: Fungible token interface
+- **Approve Pattern**: How DeFi protocols spend your tokens
+- **AMM Formula**: x * y = k (constant product)
+- **LP Tokens**: Represent pool ownership
+- **Slippage Protection**: minAmountOut parameter
+- **Factory Pattern**: Contract creating contracts
+
+## Resources
+
+- [Solidity Docs](https://docs.soliditylang.org)
+- [Hardhat v3 Docs](https://hardhat.org/docs)
+- [viem Documentation](https://viem.sh/)
+- [Uniswap V2 Whitepaper](https://uniswap.org/whitepaper.pdf)

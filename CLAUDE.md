@@ -9,7 +9,7 @@ This is a **learning project** to build a simple DEX (Decentralized Exchange) fo
 ## Tech Stack
 - **Smart Contracts**: Solidity (^0.8.28)
 - **Framework**: Hardhat v3 with TypeScript
-- **Testing**: Solidity tests (Hardhat v3 native)
+- **Testing**: Hardhat v3 native (Solidity + Node.js tests)
 - **Local Blockchain**: Hardhat Node
 
 ## Project Structure
@@ -18,21 +18,27 @@ simple-dex/
 ├── contracts/
 │   ├── tokens/
 │   │   ├── ERC20Base.sol       # Abstract base ERC-20 (shared logic)
+│   │   ├── ERC20Base.t.sol     # Solidity tests for ERC20Base
 │   │   ├── SimpleToken.sol     # Test token (mints on deploy)
-│   │   └── LPToken.sol         # LP token (pool-only mint/burn)
+│   │   ├── LPToken.sol         # LP token (pool-only mint/burn)
+│   │   └── LPToken.t.sol       # Solidity tests for LPToken
 │   ├── core/
-│   │   └── LiquidityPool.sol   # AMM with x*y=k formula
-│   └── Factory.sol             # Creates and tracks pools
+│   │   ├── LiquidityPool.sol   # AMM with x*y=k formula
+│   │   └── LiquidityPool.t.sol # Solidity tests for LiquidityPool
+│   ├── Factory.sol             # Creates and tracks pools
+│   └── Factory.t.sol           # Solidity tests for Factory
 ├── test/
-│   └── solidity/*.t.sol        # Solidity tests (26 tests)
+│   ├── ERC20Base.test.ts       # TypeScript tests for ERC20Base
+│   ├── SimpleToken.test.ts     # TypeScript tests for SimpleToken
+│   ├── LPToken.test.ts         # TypeScript tests for LPToken
+│   ├── LiquidityPool.test.ts   # TypeScript tests for LiquidityPool
+│   └── Factory.test.ts         # TypeScript tests for Factory
 ├── docs/                       # Concept explanations
 │   ├── 01-amm-formula.md
 │   ├── 02-liquidity-provider.md
 │   ├── 03-approve-pattern.md
 │   ├── 04-slippage.md
 │   └── 05-testing-approaches.md
-├── scripts/
-│   └── deploy.ts
 ├── hardhat.config.ts
 └── package.json
 ```
@@ -40,10 +46,10 @@ simple-dex/
 ## Key Commands
 ```bash
 npx hardhat compile          # Compile contracts
-npx hardhat test             # Run Solidity tests (26 tests)
-npx hardhat test solidity    # Run Solidity tests only
+npx hardhat test             # Run ALL tests (113 tests)
+npx hardhat test solidity    # Run Solidity tests only (51 tests)
+npx hardhat test nodejs      # Run TypeScript tests only (62 tests)
 npx hardhat node             # Start local blockchain
-npx hardhat run scripts/deploy.ts --network localhost  # Deploy
 ```
 
 ## Contracts Summary
@@ -58,19 +64,30 @@ npx hardhat run scripts/deploy.ts --network localhost  # Deploy
 
 ## Testing Approaches
 
-This project demonstrates **Solidity-based testing** (Hardhat v3 native):
+This project demonstrates **two testing methodologies** using Hardhat v3:
 
-### Solidity Tests (test/solidity/*.t.sol)
+### Solidity Tests (contracts/*.t.sol) - 51 tests
 ```bash
-npx hardhat test
+npx hardhat test solidity
 ```
 - Uses Hardhat v3's native Solidity test runner
 - `setUp()` runs before each test
 - `test_*()` functions are test cases
 - Uses `require()` for assertions
-- 26 tests covering all functionality
+- Includes fuzz testing with random inputs
+- Test files placed alongside contracts
 
-See [docs/05-testing-approaches.md](docs/05-testing-approaches.md) for details.
+### TypeScript Tests (test/*.test.ts) - 62 tests
+```bash
+npx hardhat test nodejs
+```
+- Uses Node.js native test runner (`node:test`)
+- `describe()` / `it()` for test structure
+- Uses `assert` from `node:assert/strict`
+- `viem` library for contract interactions
+- Good for integration tests and debugging
+
+See [docs/05-testing-approaches.md](docs/05-testing-approaches.md) for detailed comparison.
 
 ## Teaching Guidelines
 Since this is a learning project:
@@ -88,7 +105,8 @@ All phases completed:
 - ✅ Phase 3: Liquidity Pool (addLiquidity, removeLiquidity)
 - ✅ Phase 4: Swap mechanism (x*y=k, 0.3% fee, slippage protection)
 - ✅ Phase 5: Factory pattern (createPool, getPool)
-- ✅ Solidity tests (26 tests)
+- ✅ Solidity tests (51 tests with fuzz testing)
+- ✅ TypeScript tests (62 tests)
 - ✅ Documentation (5 concept guides)
 
 ## Key Concepts Covered
@@ -99,4 +117,5 @@ All phases completed:
 - Price impact and slippage protection
 - Factory pattern (contract creating contracts)
 - Solidity inheritance (abstract contracts)
-- Solidity testing with Hardhat v3
+- Two testing approaches (Solidity + TypeScript)
+- Fuzz testing for edge cases

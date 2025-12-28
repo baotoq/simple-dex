@@ -1,193 +1,189 @@
 # Testing Smart Contracts: Two Approaches
 
-This project includes both TypeScript and Solidity tests to help you learn different testing methodologies.
+This project demonstrates both Solidity and TypeScript testing with Hardhat v3.
 
 ## Overview
 
-| Aspect | TypeScript Tests | Solidity Tests (Foundry) |
-|--------|-----------------|-------------------------|
-| **Location** | `test/*.test.ts` | `test/solidity/*.t.sol` |
-| **Framework** | Hardhat + Chai | Foundry (forge) |
-| **Language** | TypeScript | Solidity |
-| **Run with** | `npx hardhat test` | `forge test` |
-| **Best for** | Integration, async ops | Unit tests, fuzzing |
+| Aspect | Solidity Tests | TypeScript Tests |
+|--------|---------------|------------------|
+| **Location** | `contracts/*.t.sol` | `test/*.test.ts` |
+| **Framework** | Hardhat v3 native | Node.js test runner |
+| **Language** | Solidity | TypeScript |
+| **Run with** | `npx hardhat test solidity` | `npx hardhat test nodejs` |
+| **Best for** | Unit tests, fuzzing | Integration, debugging |
+| **Count** | 51 tests | 62 tests |
 
 ---
 
-## TypeScript Tests (Hardhat)
+## Solidity Tests (Hardhat v3 Native)
+
+### Structure
+```solidity
+// contracts/tokens/SimpleToken.t.sol
+import "./SimpleToken.sol";
+
+contract SimpleTokenTest {
+    SimpleToken token;
+    address user1;
+
+    function setUp() public {
+        user1 = address(0x1);
+        token = new SimpleToken("Test", "TST", 1000 ether);
+    }
+
+    function test_HasCorrectName() public view {
+        require(
+            keccak256(bytes(token.name())) == keccak256(bytes("Test")),
+            "Name should be 'Test'"
+        );
+    }
+
+    function test_TransferFailsWithInsufficientBalance() public {
+        // Try-catch for expected reverts
+        try token.transfer(user1, token.balanceOf(address(this)) + 1) {
+            revert("Should have failed");
+        } catch Error(string memory reason) {
+            require(
+                keccak256(bytes(reason)) == keccak256(bytes("ERC20: insufficient balance")),
+                "Wrong error"
+            );
+        }
+    }
+}
+```
+
+### Key Features
+- `setUp()` - Runs before each test
+- `test_*()` - Test function naming convention
+- `require()` - Assertions
+- `try/catch` - Testing reverts
+- Fuzz testing with function parameters
+
+### Fuzz Testing
+```solidity
+// Hardhat v3 runs this with 256 random inputs!
+function test_TransferAnyAmount(uint256 amount) public {
+    // Bound amount to valid range
+    if (amount > token.balanceOf(address(this))) {
+        amount = token.balanceOf(address(this));
+    }
+    if (amount == 0) amount = 1;
+
+    uint256 balanceBefore = token.balanceOf(address(this));
+    token.transfer(user1, amount);
+
+    require(
+        token.balanceOf(address(this)) == balanceBefore - amount,
+        "Balance should decrease"
+    );
+}
+```
+
+### Running
+```bash
+npx hardhat test solidity              # Run all Solidity tests
+npx hardhat test solidity --grep swap  # Filter by name
+```
+
+---
+
+## TypeScript Tests (Node.js Native)
 
 ### Structure
 ```typescript
-import { expect } from "chai";
-import hre from "hardhat";
+// test/SimpleToken.test.ts
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import { network } from "hardhat";
+import { parseEther } from "viem";
 
-describe("SimpleToken", function () {
-  async function deployFixture() {
-    const token = await hre.viem.deployContract("SimpleToken", [...]);
-    return { token };
-  }
+describe("SimpleToken", async function () {
+  const { viem } = await network.connect();
+  const [owner, user1] = await viem.getWalletClients();
 
   it("Should have correct name", async function () {
-    const { token } = await deployFixture();
-    expect(await token.read.name()).to.equal("Test");
+    const token = await viem.deployContract("SimpleToken", [
+      "Test", "TST", parseEther("1000")
+    ]);
+
+    assert.equal(await token.read.name(), "Test");
+  });
+
+  it("Should fail with insufficient balance", async function () {
+    const token = await viem.deployContract("SimpleToken", [
+      "Test", "TST", parseEther("1000")
+    ]);
+
+    // Get contract instance for user1 (who has no tokens)
+    const tokenAsUser1 = await viem.getContractAt("SimpleToken", token.address, {
+      client: { wallet: user1 },
+    });
+
+    try {
+      await tokenAsUser1.write.transfer([owner.account.address, parseEther("100")]);
+      assert.fail("Should have thrown");
+    } catch (error: unknown) {
+      assert.ok(
+        (error as Error).message.includes("ERC20: insufficient balance"),
+        "Should fail with insufficient balance"
+      );
+    }
   });
 });
 ```
 
 ### Key Features
-- `describe()` / `it()` - Group and name tests
-- `expect()` - Chai assertions
-- `async/await` - Handle blockchain transactions
-- `.read.` / `.write.` - viem syntax for contract calls
+- `describe()` / `it()` - Test organization
+- `assert` from `node:assert/strict` - Assertions
+- `viem` library - Contract interactions
+- `network.connect()` - Network access
+- `.read.*` / `.write.*` - Contract calls
 
 ### Running
 ```bash
-npx hardhat test                    # Run all tests
-npx hardhat test test/Factory.test.ts  # Run specific file
-npx hardhat test --grep "swap"      # Run tests matching pattern
-```
-
----
-
-## Solidity Tests (Foundry)
-
-### Structure
-```solidity
-import "forge-std/Test.sol";
-
-contract SimpleTokenTest is Test {
-    SimpleToken token;
-
-    function setUp() public {
-        token = new SimpleToken("Test", "TST", 1000);
-    }
-
-    function test_HasCorrectName() public view {
-        assertEq(token.name(), "Test");
-    }
-}
-```
-
-### Key Features
-
-#### Basic Assertions
-```solidity
-assertEq(a, b);           // a == b
-assertTrue(condition);     // condition is true
-assertFalse(condition);    // condition is false
-assertGt(a, b);           // a > b
-assertLt(a, b);           // a < b
-```
-
-#### Cheatcodes (vm.*)
-```solidity
-// Impersonate an address
-vm.prank(alice);
-token.transfer(bob, 100);  // This call is from alice
-
-// Expect a revert
-vm.expectRevert("Insufficient balance");
-token.transfer(bob, 1000000);
-
-// Expect an event
-vm.expectEmit(true, true, false, true);
-emit Transfer(alice, bob, 100);
-token.transfer(bob, 100);
-
-// Create labeled address
-address alice = makeAddr("alice");
-
-// Set block timestamp
-vm.warp(block.timestamp + 1 days);
-
-// Set ETH balance
-vm.deal(alice, 10 ether);
-```
-
-#### Fuzz Testing
-```solidity
-// Foundry runs this with many random inputs!
-function testFuzz_Transfer(uint256 amount) public {
-    // Bound to valid range
-    amount = bound(amount, 0, token.balanceOf(owner));
-
-    token.transfer(alice, amount);
-    assertEq(token.balanceOf(alice), amount);
-}
-```
-
-### Running (requires Foundry installation)
-```bash
-# Install Foundry first
-curl -L https://foundry.paradigm.xyz | bash
-foundryup
-
-# Run tests
-forge test                    # Run all tests
-forge test -vv                # Verbose output
-forge test --match-test swap  # Run tests matching pattern
-forge test --gas-report       # Show gas usage
+npx hardhat test nodejs              # Run all TypeScript tests
+npx hardhat test nodejs --grep swap  # Filter by name
 ```
 
 ---
 
 ## Comparison: Same Test in Both Styles
 
-### TypeScript
-```typescript
-it("Should fail transfer with insufficient balance", async function () {
-  const { token, alice, bob } = await deployFixture();
+### Checking Insufficient Balance
 
-  const aliceToken = await hre.viem.getContractAt("SimpleToken", token.address, {
-    client: { wallet: alice },
-  });
-
-  await expect(
-    aliceToken.write.transfer([bob.account.address, parseUnits("100", 18)])
-  ).to.be.rejectedWith("Insufficient balance");
-});
-```
-
-### Solidity
+**Solidity:**
 ```solidity
 function test_TransferFailsWithInsufficientBalance() public {
-    vm.prank(alice);  // Much simpler!
-    vm.expectRevert("Insufficient balance");
-    token.transfer(bob, 100 * 10 ** 18);
+    token.transfer(user1, 1000 ether); // Give all to user1
+
+    try token.transfer(user2, 1 ether) {
+        revert("Should have failed");
+    } catch Error(string memory reason) {
+        require(
+            keccak256(bytes(reason)) == keccak256(bytes("ERC20: insufficient balance")),
+            "Wrong error"
+        );
+    }
 }
 ```
 
----
+**TypeScript:**
+```typescript
+it("Should fail with insufficient balance", async function () {
+  const tokenAsUser1 = await viem.getContractAt("SimpleToken", token.address, {
+    client: { wallet: user1 },
+  });
 
-## Fuzz Testing Explained
-
-Fuzz testing automatically generates random inputs to find edge cases.
-
-### Example: Testing Swap Invariants
-```solidity
-function testFuzz_KNeverDecreases(uint256 swapAmount) public {
-    // Setup: Add liquidity
-    _addLiquidity(1000e18, 1000e18);
-
-    // Bound: Keep swap in reasonable range
-    swapAmount = bound(swapAmount, 1e18, 500e18);
-
-    // Record K before
-    (uint256 r0, uint256 r1) = pool.getReserves();
-    uint256 kBefore = r0 * r1;
-
-    // Action: Swap
-    tokenA.approve(address(pool), swapAmount);
-    pool.swap(address(tokenA), swapAmount, 0);
-
-    // Assert: K should never decrease
-    (r0, r1) = pool.getReserves();
-    uint256 kAfter = r0 * r1;
-    assertTrue(kAfter >= kBefore);
-}
+  try {
+    await tokenAsUser1.write.transfer([user2.account.address, parseEther("100")]);
+    assert.fail("Should have thrown");
+  } catch (error: unknown) {
+    assert.ok(
+      (error as Error).message.includes("ERC20: insufficient balance")
+    );
+  }
+});
 ```
-
-Foundry will run this with 256 random values for `swapAmount` by default!
 
 ---
 
@@ -196,52 +192,49 @@ Foundry will run this with 256 random values for `swapAmount` by default!
 | Scenario | Recommended |
 |----------|-------------|
 | Quick unit tests | Solidity |
-| Testing reverts | Solidity (vm.expectRevert) |
-| Testing events | Solidity (vm.expectEmit) |
 | Fuzz testing | Solidity |
+| Testing reverts | Either (both work) |
 | Complex async flows | TypeScript |
-| Frontend integration | TypeScript |
+| Frontend integration prep | TypeScript |
 | Learning/debugging | TypeScript (better errors) |
+| Gas optimization | Solidity |
 
 ---
 
 ## Project Test Files
 
-### TypeScript Tests (56 tests)
+### Solidity Tests (51 tests)
 ```
-test/
-├── ERC20Base.test.ts       # Base ERC-20 functionality
-├── SimpleToken.test.ts     # Constructor minting
-├── LPToken.test.ts         # Pool-only mint/burn
-├── LiquidityPool.test.ts   # AMM operations
-└── Factory.test.ts         # Pool creation + integration
+contracts/
+├── tokens/
+│   ├── ERC20Base.t.sol     # 13 tests (including fuzz)
+│   └── LPToken.t.sol       # 8 tests (including fuzz)
+├── core/
+│   └── LiquidityPool.t.sol # 15 tests (including fuzz)
+├── Factory.t.sol           # 12 tests
+└── Counter.t.sol           # 3 tests (example)
 ```
 
-### Solidity Tests (with Foundry)
+### TypeScript Tests (62 tests)
 ```
-test/solidity/
-├── SimpleToken.t.sol       # Includes fuzz tests!
-├── LPToken.t.sol           # vm.prank for access control
-├── LiquidityPool.t.sol     # AMM fuzz testing
-└── Factory.t.sol           # Event testing
+test/
+├── ERC20Base.test.ts       # 15 tests
+├── SimpleToken.test.ts     # 3 tests
+├── LPToken.test.ts         # 12 tests
+├── LiquidityPool.test.ts   # 18 tests
+├── Factory.test.ts         # 12 tests
+└── Counter.ts              # 2 tests (example)
 ```
 
 ---
 
-## Installing Foundry
-
-To run the Solidity tests, install Foundry:
+## Running All Tests
 
 ```bash
-# macOS/Linux
-curl -L https://foundry.paradigm.xyz | bash
-foundryup
+# Run everything (113 tests)
+npx hardhat test
 
-# Verify installation
-forge --version
-```
-
-Then run:
-```bash
-forge test
+# Output:
+# 51 passing (solidity)
+# 62 passing (nodejs)
 ```

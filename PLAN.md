@@ -60,24 +60,27 @@ simple-dex/
 ├── contracts/
 │   ├── tokens/
 │   │   ├── ERC20Base.sol       # Abstract base ERC-20 (shared logic)
+│   │   ├── ERC20Base.t.sol     # Solidity tests
 │   │   ├── SimpleToken.sol     # Test token (mints on deploy)
-│   │   └── LPToken.sol         # LP token (pool-only mint/burn)
+│   │   ├── LPToken.sol         # LP token (pool-only mint/burn)
+│   │   └── LPToken.t.sol       # Solidity tests
 │   ├── core/
-│   │   └── LiquidityPool.sol   # AMM logic (x * y = k)
-│   └── Factory.sol             # Creates trading pairs
+│   │   ├── LiquidityPool.sol   # AMM logic (x * y = k)
+│   │   └── LiquidityPool.t.sol # Solidity tests
+│   ├── Factory.sol             # Creates trading pairs
+│   └── Factory.t.sol           # Solidity tests
 ├── test/
-│   ├── ERC20Base.test.ts       # Base ERC-20 tests
-│   ├── SimpleToken.test.ts     # SimpleToken-specific tests
-│   ├── LPToken.test.ts         # LPToken-specific tests
-│   ├── LiquidityPool.test.ts   # AMM tests
-│   └── Factory.test.ts         # Factory + integration tests
+│   ├── ERC20Base.test.ts       # TypeScript tests
+│   ├── SimpleToken.test.ts     # TypeScript tests
+│   ├── LPToken.test.ts         # TypeScript tests
+│   ├── LiquidityPool.test.ts   # TypeScript tests
+│   └── Factory.test.ts         # TypeScript tests
 ├── docs/
 │   ├── 01-amm-formula.md       # x * y = k explained
 │   ├── 02-liquidity-provider.md # LP tokens & impermanent loss
 │   ├── 03-approve-pattern.md   # DeFi token spending
-│   └── 04-slippage.md          # Protection mechanisms
-├── scripts/
-│   └── deploy.ts
+│   ├── 04-slippage.md          # Protection mechanisms
+│   └── 05-testing-approaches.md # Testing comparison
 ├── hardhat.config.ts
 └── package.json
 ```
@@ -148,7 +151,8 @@ simple-dex/
 ### Phase 5: Integration & Testing ✅
 - [x] Full integration tests (create pool → add liquidity → swap → remove liquidity)
 - [x] Edge case tests (slippage, insufficient balance)
-- [x] 56 tests passing
+- [x] Fuzz testing with random inputs
+- [x] 113 tests passing (51 Solidity + 62 TypeScript)
 - [x] Documentation in docs/ folder
 
 ---
@@ -202,14 +206,17 @@ Inherits ERC20Base. Only the pool address can mint/burn tokens.
 # Compile contracts
 npx hardhat compile
 
-# Run tests
+# Run all tests (113 tests)
 npx hardhat test
 
-# Start local blockchain (Terminal 1)
-npx hardhat node
+# Run Solidity tests only (51 tests)
+npx hardhat test solidity
 
-# Deploy to local blockchain (Terminal 2)
-npx hardhat run scripts/deploy.ts --network localhost
+# Run TypeScript tests only (62 tests)
+npx hardhat test nodejs
+
+# Start local blockchain
+npx hardhat node
 ```
 
 ---
