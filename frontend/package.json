@@ -10,9 +10,15 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@reown/appkit": "^1.8.15",
+    "@reown/appkit-adapter-wagmi": "^1.8.15",
+    "@tanstack/react-query": "^5.90.14",
+    "@web3modal/wagmi": "^5.1.11",
     "next": "16.1.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "viem": "^2.43.3",
+    "wagmi": "^2.19.5"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

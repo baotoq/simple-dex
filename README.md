@@ -9,13 +9,21 @@ This project implements a basic constant product AMM (like Uniswap V1) with:
 - Liquidity pools with LP tokens
 - Token swaps using the x*y=k formula
 - Factory pattern for pool creation
+- **Frontend UI** for swapping and liquidity management
 
 ## Tech Stack
 
+### Smart Contracts
 - **Solidity** ^0.8.28 - Smart contract language
 - **Hardhat v3** - Development framework
 - **viem** - Ethereum interactions
 - **TypeScript** - Test language
+
+### Frontend
+- **Next.js 14** - React framework
+- **Tailwind CSS** - Styling
+- **wagmi v3** - React hooks for Ethereum
+- **RainbowKit** - Wallet connection
 
 ## Quick Start
 
@@ -29,14 +37,25 @@ npx hardhat compile
 # Run all tests (113 tests)
 npx hardhat test
 
+# Start local blockchain + deploy + frontend
+npx hardhat node                                          # Terminal 1
+npx hardhat run scripts/deploy.ts --network localhost     # Terminal 2
+cd frontend && npm install && npm run dev                 # Terminal 3
+```
+
+Then open http://localhost:3000, connect MetaMask to localhost:8545, and import a test account.
+
+### Other Commands
+
+```bash
 # Run only Solidity tests (51 tests)
 npx hardhat test solidity
 
 # Run only TypeScript tests (62 tests)
 npx hardhat test nodejs
 
-# Start local blockchain
-npx hardhat node
+# Run interactive demo
+npx hardhat run scripts/demo.ts --network localhost
 ```
 
 ## Project Structure
@@ -46,16 +65,17 @@ simple-dex/
 ├── contracts/
 │   ├── tokens/
 │   │   ├── ERC20Base.sol       # Abstract base ERC-20
-│   │   ├── ERC20Base.t.sol     # Solidity tests
 │   │   ├── SimpleToken.sol     # Test token
-│   │   ├── LPToken.sol         # LP token
-│   │   └── LPToken.t.sol       # Solidity tests
+│   │   └── LPToken.sol         # LP token
 │   ├── core/
-│   │   ├── LiquidityPool.sol   # AMM logic
-│   │   └── LiquidityPool.t.sol # Solidity tests
-│   ├── Factory.sol             # Pool factory
-│   └── Factory.t.sol           # Solidity tests
+│   │   └── LiquidityPool.sol   # AMM logic
+│   └── Factory.sol             # Pool factory
 ├── test/                       # TypeScript tests
+├── scripts/                    # Deployment scripts
+├── frontend/                   # Next.js frontend
+│   ├── src/app/                # Pages (swap, liquidity)
+│   ├── src/components/         # React components
+│   └── src/hooks/              # Web3 hooks
 ├── docs/                       # Concept guides
 └── hardhat.config.ts
 ```

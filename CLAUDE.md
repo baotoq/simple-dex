@@ -33,6 +33,20 @@ simple-dex/
 │   ├── LPToken.test.ts         # TypeScript tests for LPToken
 │   ├── LiquidityPool.test.ts   # TypeScript tests for LiquidityPool
 │   └── Factory.test.ts         # TypeScript tests for Factory
+├── scripts/
+│   ├── deploy.ts               # Traditional deployment script
+│   ├── demo.ts                 # Interactive demo script
+│   └── setup-pool.ts           # Post-Ignition pool setup
+├── ignition/modules/
+│   └── SimpleDex.ts            # Hardhat Ignition module
+├── frontend/                   # Next.js frontend
+│   ├── src/
+│   │   ├── app/                # Pages (swap, liquidity)
+│   │   ├── components/         # React components
+│   │   ├── hooks/              # Custom hooks (useSwap, useLiquidity)
+│   │   ├── config/             # Wagmi & contract config
+│   │   └── abis/               # Contract ABIs
+│   └── package.json
 ├── docs/                       # Concept explanations
 │   ├── 01-amm-formula.md
 │   ├── 02-liquidity-provider.md
@@ -45,11 +59,20 @@ simple-dex/
 
 ## Key Commands
 ```bash
+# Smart Contracts
 npx hardhat compile          # Compile contracts
 npx hardhat test             # Run ALL tests (113 tests)
 npx hardhat test solidity    # Run Solidity tests only (51 tests)
 npx hardhat test nodejs      # Run TypeScript tests only (62 tests)
 npx hardhat node             # Start local blockchain
+
+# Deployment
+npx hardhat run scripts/deploy.ts --network localhost    # Deploy contracts
+npx hardhat run scripts/demo.ts --network localhost      # Run demo
+
+# Frontend
+cd frontend && npm run dev   # Start frontend dev server
+cd frontend && npm run build # Build frontend for production
 ```
 
 ## Contracts Summary
@@ -108,6 +131,14 @@ All phases completed:
 - ✅ Solidity tests (51 tests with fuzz testing)
 - ✅ TypeScript tests (62 tests)
 - ✅ Documentation (5 concept guides)
+- ✅ Deploy scripts (traditional + Ignition)
+- ✅ Frontend (Next.js + wagmi + RainbowKit)
+
+## Frontend Stack
+- **Framework**: Next.js 14 (App Router)
+- **Styling**: Tailwind CSS
+- **Web3**: wagmi v3 + viem
+- **Wallet**: RainbowKit
 
 ## Key Concepts Covered
 - ERC-20 token standard
@@ -119,3 +150,5 @@ All phases completed:
 - Solidity inheritance (abstract contracts)
 - Two testing approaches (Solidity + TypeScript)
 - Fuzz testing for edge cases
+- React hooks for Web3 (useConnection, useReadContract, useWriteContract)
+- Wallet connection with RainbowKit

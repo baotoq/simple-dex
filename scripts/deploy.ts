@@ -40,10 +40,23 @@ async function main() {
   console.log("   LP Token at:", lpTokenAddress);
 
   // Add initial liquidity
-  console.log("\n4. Adding initial liquidity (10,000 TKA + 20,000 TKB)...");
-  await tokenA.write.approve([poolAddress, parseEther("10000")]);
+  // Note: Factory sorts tokens, so pool.token0 might be tokenB if tokenB.address < tokenA.address
+  const poolToken0 = await pool.read.token0();
+  const poolToken1 = await pool.read.token1();
+
+  // Determine amounts based on which token is token0 in the pool
+  const isTokenAFirst = poolToken0.toLowerCase() === tokenA.address.toLowerCase();
+  const amount0 = isTokenAFirst ? parseEther("10000") : parseEther("20000");
+  const amount1 = isTokenAFirst ? parseEther("20000") : parseEther("10000");
+
+  console.log("\n4. Adding initial liquidity...");
+  console.log(`   Pool token0: ${poolToken0}`);
+  console.log(`   Pool token1: ${poolToken1}`);
+
+  // Approve both tokens for the pool
+  await tokenA.write.approve([poolAddress, parseEther("20000")]);
   await tokenB.write.approve([poolAddress, parseEther("20000")]);
-  await pool.write.addLiquidity([parseEther("10000"), parseEther("20000")]);
+  await pool.write.addLiquidity([amount0, amount1]);
 
   const [reserve0, reserve1] = await pool.read.getReserves();
   console.log("   Reserves - TKA:", reserve0.toString(), "TKB:", reserve1.toString());

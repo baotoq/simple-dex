@@ -75,6 +75,19 @@ simple-dex/
 │   ├── LPToken.test.ts         # TypeScript tests
 │   ├── LiquidityPool.test.ts   # TypeScript tests
 │   └── Factory.test.ts         # TypeScript tests
+├── scripts/
+│   ├── deploy.ts               # Traditional deployment
+│   ├── demo.ts                 # Interactive demo
+│   └── setup-pool.ts           # Post-Ignition setup
+├── ignition/modules/
+│   └── SimpleDex.ts            # Hardhat Ignition module
+├── frontend/                   # Next.js + wagmi + RainbowKit
+│   ├── src/
+│   │   ├── app/                # Pages (swap, liquidity)
+│   │   ├── components/         # SwapCard, AddLiquidity, etc.
+│   │   ├── hooks/              # useSwap, useLiquidity, etc.
+│   │   └── config/             # Wagmi config, contract addresses
+│   └── package.json
 ├── docs/
 │   ├── 01-amm-formula.md       # x * y = k explained
 │   ├── 02-liquidity-provider.md # LP tokens & impermanent loss
@@ -203,20 +216,21 @@ Inherits ERC20Base. Only the pool address can mint/burn tokens.
 ## Commands
 
 ```bash
-# Compile contracts
-npx hardhat compile
+# Smart Contracts
+npx hardhat compile              # Compile contracts
+npx hardhat test                 # Run all tests (113 tests)
+npx hardhat test solidity        # Run Solidity tests only (51 tests)
+npx hardhat test nodejs          # Run TypeScript tests only (62 tests)
+npx hardhat node                 # Start local blockchain
 
-# Run all tests (113 tests)
-npx hardhat test
+# Deployment
+npx hardhat run scripts/deploy.ts --network localhost
+npx hardhat run scripts/demo.ts --network localhost
 
-# Run Solidity tests only (51 tests)
-npx hardhat test solidity
-
-# Run TypeScript tests only (62 tests)
-npx hardhat test nodejs
-
-# Start local blockchain
-npx hardhat node
+# Frontend
+cd frontend && npm install       # Install frontend dependencies
+cd frontend && npm run dev       # Start dev server (http://localhost:3000)
+cd frontend && npm run build     # Build for production
 ```
 
 ---
@@ -237,5 +251,38 @@ Possible extensions to continue learning:
 2. **Flash loans** - Borrow without collateral (repay in same tx)
 3. **Oracles** - Price feeds for external data
 4. **Governance** - DAO voting for protocol changes
-5. **Frontend** - React/Next.js UI for the DEX
+5. ~~**Frontend** - React/Next.js UI for the DEX~~ ✅ DONE
 6. **Testnet deployment** - Deploy to Sepolia/Goerli
+
+### Phase 6: Frontend ✅ COMPLETE
+
+**Tech Stack**: Next.js 14 + Tailwind CSS + wagmi v3 + RainbowKit
+
+**Features implemented**:
+- Wallet connection with RainbowKit
+- Token swap interface with slippage protection
+- Add/remove liquidity forms
+- Pool info display (reserves, price, share)
+- Real-time balance updates
+
+**Frontend Structure**:
+```
+frontend/src/
+├── app/
+│   ├── page.tsx              # Swap page
+│   └── liquidity/page.tsx    # Liquidity management
+├── components/
+│   ├── Header.tsx            # Navbar with wallet connect
+│   ├── SwapCard.tsx          # Token swap UI
+│   ├── AddLiquidity.tsx      # Add liquidity form
+│   ├── RemoveLiquidity.tsx   # Remove liquidity form
+│   └── PoolInfo.tsx          # Pool statistics
+├── hooks/
+│   ├── useSwap.ts            # Swap logic
+│   ├── useLiquidity.ts       # Liquidity logic
+│   ├── useTokenBalance.ts    # Balance fetching
+│   └── usePoolReserves.ts    # Pool reserves
+└── config/
+    ├── wagmi.ts              # Wagmi + RainbowKit config
+    └── contracts.ts          # Contract addresses
+```
