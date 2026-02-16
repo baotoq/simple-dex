@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Users can swap tokens through liquidity pools using the constant product AMM formula, with the math and mechanics fully transparent and tested.
-**Current focus:** Phase 2 - Core AMM Implementation
+**Current focus:** Phase 3 - Comprehensive Testing (next up)
 
 ## Current Position
 
-Phase: 2 of 8 (Core AMM Implementation)
+Phase: 2 of 8 (Core AMM Implementation) -- COMPLETE
 Plan: 2 of 2 in current phase
-Status: Phase 2 complete
-Last activity: 2026-02-16 — Completed 02-02-PLAN.md (Factory contract with integration tests)
+Status: Phase 2 verified and complete
+Last activity: 2026-02-16 — Phase 2 verified (8/8 must-haves passed)
 
-Progress: [██░░░░░░░░] 12.5%
+Progress: [███░░░░░░░] 25%
 
 ## Performance Metrics
 

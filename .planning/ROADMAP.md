@@ -12,8 +12,8 @@ SimpleDEX implements a constant product AMM (x*y=k) from smart contracts to fron
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation Contracts** - ERC20 test tokens for pool operations
-- [ ] **Phase 2: Core AMM Implementation** - Pool and Factory contracts with x*y=k formula
+- [x] **Phase 1: Foundation Contracts** - ERC20 test tokens for pool operations (2026-02-16)
+- [x] **Phase 2: Core AMM Implementation** - Pool and Factory contracts with x*y=k formula (2026-02-16)
 - [ ] **Phase 3: Comprehensive Testing** - Security validation and edge case coverage
 - [ ] **Phase 4: Frontend Foundation** - Wallet connection and read-only pool data
 - [ ] **Phase 5: Swap Functionality** - User can execute token swaps with price impact
@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — Initialize Foundry project, implement WETH and MockUSDC tokens with tests
+- [x] 01-01-PLAN.md — Initialize Foundry project, implement WETH and MockUSDC tokens with tests
 
 ### Phase 2: Core AMM Implementation
 **Goal**: Pool and Factory contracts implement constant product AMM with security patterns
@@ -52,8 +52,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Pool contract with AMM core (swap/mint/burn), LP token, security patterns, and basic sanity tests
-- [ ] 02-02-PLAN.md — Factory contract with CREATE2 deployment, pair registry, and end-to-end integration tests
+- [x] 02-01-PLAN.md — Pool contract with AMM core (swap/mint/burn), LP token, security patterns, and basic sanity tests
+- [x] 02-02-PLAN.md — Factory contract with CREATE2 deployment, pair registry, and end-to-end integration tests
 
 ### Phase 3: Comprehensive Testing
 **Goal**: Smart contracts validated against edge cases, attacks, and invariant violations
@@ -146,8 +146,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation Contracts | 0/1 | Planned | - |
-| 2. Core AMM Implementation | 0/2 | Planned | - |
+| 1. Foundation Contracts | 1/1 | Complete | 2026-02-16 |
+| 2. Core AMM Implementation | 2/2 | Complete | 2026-02-16 |
 | 3. Comprehensive Testing | 0/TBD | Not started | - |
 | 4. Frontend Foundation | 0/TBD | Not started | - |
 | 5. Swap Functionality | 0/TBD | Not started | - |
