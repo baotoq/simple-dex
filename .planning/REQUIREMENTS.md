@@ -93,47 +93,47 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SC-01 | TBD | Pending |
-| SC-02 | TBD | Pending |
-| SC-03 | TBD | Pending |
-| SC-04 | TBD | Pending |
-| SC-05 | TBD | Pending |
-| SC-06 | TBD | Pending |
-| SC-07 | TBD | Pending |
-| SC-08 | TBD | Pending |
-| SC-09 | TBD | Pending |
-| SC-10 | TBD | Pending |
-| SC-11 | TBD | Pending |
-| TK-01 | TBD | Pending |
-| TK-02 | TBD | Pending |
-| FE-01 | TBD | Pending |
-| FE-02 | TBD | Pending |
-| FE-03 | TBD | Pending |
-| FE-04 | TBD | Pending |
-| FE-05 | TBD | Pending |
-| FE-06 | TBD | Pending |
-| FE-07 | TBD | Pending |
-| FE-08 | TBD | Pending |
-| FE-09 | TBD | Pending |
-| FE-10 | TBD | Pending |
-| FE-11 | TBD | Pending |
-| FE-12 | TBD | Pending |
-| TS-01 | TBD | Pending |
-| TS-02 | TBD | Pending |
-| TS-03 | TBD | Pending |
-| TS-04 | TBD | Pending |
-| TS-05 | TBD | Pending |
-| TS-06 | TBD | Pending |
-| TS-07 | TBD | Pending |
-| TS-08 | TBD | Pending |
-| DP-01 | TBD | Pending |
-| DP-02 | TBD | Pending |
+| TK-01 | Phase 1 | Pending |
+| TK-02 | Phase 1 | Pending |
+| SC-01 | Phase 2 | Pending |
+| SC-02 | Phase 2 | Pending |
+| SC-03 | Phase 2 | Pending |
+| SC-04 | Phase 2 | Pending |
+| SC-05 | Phase 2 | Pending |
+| SC-06 | Phase 2 | Pending |
+| SC-07 | Phase 2 | Pending |
+| SC-08 | Phase 2 | Pending |
+| SC-09 | Phase 2 | Pending |
+| SC-10 | Phase 2 | Pending |
+| SC-11 | Phase 2 | Pending |
+| TS-01 | Phase 3 | Pending |
+| TS-02 | Phase 3 | Pending |
+| TS-03 | Phase 3 | Pending |
+| TS-04 | Phase 3 | Pending |
+| TS-05 | Phase 3 | Pending |
+| TS-06 | Phase 3 | Pending |
+| TS-07 | Phase 3 | Pending |
+| TS-08 | Phase 3 | Pending |
+| FE-01 | Phase 4 | Pending |
+| FE-07 | Phase 4 | Pending |
+| FE-08 | Phase 4 | Pending |
+| FE-09 | Phase 4 | Pending |
+| FE-02 | Phase 5 | Pending |
+| FE-03 | Phase 5 | Pending |
+| FE-04 | Phase 5 | Pending |
+| FE-11 | Phase 5 | Pending |
+| FE-05 | Phase 6 | Pending |
+| FE-06 | Phase 6 | Pending |
+| FE-10 | Phase 7 | Pending |
+| FE-12 | Phase 7 | Pending |
+| DP-01 | Phase 8 | Pending |
+| DP-02 | Phase 8 | Pending |
 
 **Coverage:**
 - v1 requirements: 32 total
-- Mapped to phases: 0
-- Unmapped: 32
+- Mapped to phases: 32
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-16*
-*Last updated: 2026-02-16 after initial definition*
+*Last updated: 2026-02-16 after roadmap creation*
