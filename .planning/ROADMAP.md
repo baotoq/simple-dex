@@ -49,10 +49,11 @@ Plans:
   6. Pool contract burns minimum liquidity on first deposit to prevent inflation attack
   7. Factory contract creates pools for token pairs and prevents duplicates
   8. Pool emits events for swaps, liquidity additions, and removals
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] TBD
+- [ ] 02-01-PLAN.md — Pool contract with AMM core (swap/mint/burn), LP token, security patterns, and basic sanity tests
+- [ ] 02-02-PLAN.md — Factory contract with CREATE2 deployment, pair registry, and end-to-end integration tests
 
 ### Phase 3: Comprehensive Testing
 **Goal**: Smart contracts validated against edge cases, attacks, and invariant violations
@@ -146,7 +147,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation Contracts | 0/1 | Planned | - |
-| 2. Core AMM Implementation | 0/TBD | Not started | - |
+| 2. Core AMM Implementation | 0/2 | Planned | - |
 | 3. Comprehensive Testing | 0/TBD | Not started | - |
 | 4. Frontend Foundation | 0/TBD | Not started | - |
 | 5. Swap Functionality | 0/TBD | Not started | - |
