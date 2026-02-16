@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 2 of 8 (Core AMM Implementation)
-Plan: 1 of 2 in current phase
-Status: Executing Phase 2 — Plan 02-01 complete
-Last activity: 2026-02-16 — Completed 02-01-PLAN.md (Pool contract with AMM core)
+Plan: 2 of 2 in current phase
+Status: Phase 2 complete
+Last activity: 2026-02-16 — Completed 02-02-PLAN.md (Factory contract with integration tests)
 
 Progress: [██░░░░░░░░] 12.5%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 4.5 min
-- Total execution time: 0.15 hours
+- Total plans completed: 3
+- Average duration: 4.7 min
+- Total execution time: 0.23 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-contracts | 1 | 4 min | 4 min |
-| 02-core-amm-implementation | 1 | 5 min | 5 min |
+| 02-core-amm-implementation | 2 | 10 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (4min), 02-01 (5min)
+- Last 5 plans: 01-01 (4min), 02-01 (5min), 02-02 (5min)
 - Trend: Stable execution pace
 
 *Updated after each plan completion*
@@ -53,6 +53,8 @@ Recent decisions affecting current work:
 - Dead address (0xdEaD) for MINIMUM_LIQUIDITY lock — OZ v5 rejects mint to address(0)
 - SafeERC20 via 'using' directive — Battle-tested safe transfer pattern
 - Pool IS LP token (ERC20 inheritance) — Uniswap V2 architecture pattern
+- CREATE2 with constructor params in bytecode — Cleaner than initialize() for Solidity 0.8.28
+- Owner-only pool creation — Deliberate simplification for learning project
 
 ### Pending Todos
 
@@ -65,5 +67,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16 — Phase 2 execution
-Stopped at: Completed 02-01-PLAN.md (Pool contract with AMM core)
-Resume file: .planning/phases/02-core-amm-implementation/02-01-SUMMARY.md
+Stopped at: Completed 02-02-PLAN.md (Factory contract with integration tests)
+Resume file: .planning/phases/02-core-amm-implementation/02-02-SUMMARY.md
