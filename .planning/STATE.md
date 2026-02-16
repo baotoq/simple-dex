@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 1 of 8 (Foundation Contracts)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-02-16 — Roadmap created with 8 phases covering 32 v1 requirements
+Plan: 1 of 1 in current phase
+Status: Phase 1 complete
+Last activity: 2026-02-16 — Completed 01-01-PLAN.md (Foundation tokens)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 12.5%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: 0 min
-- Total execution time: 0.0 hours
+- Total plans completed: 1
+- Average duration: 4 min
+- Total execution time: 0.07 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-foundation-contracts | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: None yet
-- Trend: No data
+- Last 5 plans: 01-01 (4min)
+- Trend: First plan completed
 
 *Updated after each plan completion*
 
@@ -45,6 +45,10 @@ Recent decisions affecting current work:
 - Constant product over concentrated liquidity — Simpler to understand, foundational to all AMMs
 - Foundry over Hardhat — Solidity-native tests, faster compilation, modern tooling
 - Local only, no testnet — Reduces deployment complexity, focuses on learning
+- OpenZeppelin v5.5.0 for ERC20 — Battle-tested implementation, widely adopted standard
+- WETH follows WETH9 pattern — Canonical deposit/withdraw for ETH wrapping
+- MockUSDC uses 6 decimals — Matches real USDC token precision for realistic testing
+- Faucet functions for development — Unrestricted token minting for local testing convenience
 
 ### Pending Todos
 
@@ -56,6 +60,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-16 — Initial roadmap creation
-Stopped at: Roadmap structure complete, ready for phase 1 planning
-Resume file: None
+Last session: 2026-02-16 — Phase 1 execution
+Stopped at: Completed 01-01-PLAN.md (Foundation tokens with WETH and MockUSDC)
+Resume file: .planning/phases/01-foundation-contracts/01-01-SUMMARY.md
