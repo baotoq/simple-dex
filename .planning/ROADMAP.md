@@ -66,10 +66,12 @@ Plans:
   4. x*y=k invariant verified to hold after every swap and liquidity operation
   5. Reentrancy tests confirm protection prevents callback attacks
   6. Slither static analysis shows no high-severity findings
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] TBD
+- [ ] 03-01-PLAN.md — Comprehensive Pool unit tests with edge cases and x*y=k invariant assertions
+- [ ] 03-02-PLAN.md — Fuzz tests (10,000+ runs), stateful invariant tests, and reentrancy attack tests
+- [ ] 03-03-PLAN.md — Slither static analysis configuration and security validation
 
 ### Phase 4: Frontend Foundation
 **Goal**: User can connect wallet and view pool data without executing transactions
@@ -148,7 +150,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 |-------|----------------|--------|-----------|
 | 1. Foundation Contracts | 1/1 | Complete | 2026-02-16 |
 | 2. Core AMM Implementation | 2/2 | Complete | 2026-02-16 |
-| 3. Comprehensive Testing | 0/TBD | Not started | - |
+| 3. Comprehensive Testing | 0/3 | Not started | - |
 | 4. Frontend Foundation | 0/TBD | Not started | - |
 | 5. Swap Functionality | 0/TBD | Not started | - |
 | 6. Liquidity Management | 0/TBD | Not started | - |
