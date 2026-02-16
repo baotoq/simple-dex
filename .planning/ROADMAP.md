@@ -31,10 +31,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. Token A exists with configurable name, symbol, and initial supply
   2. Token B exists with configurable name, symbol, and initial supply
   3. Tokens implement standard ERC20 interface (transfer, approve, balanceOf)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] TBD
+- [ ] 01-01-PLAN.md — Initialize Foundry project, implement WETH and MockUSDC tokens with tests
 
 ### Phase 2: Core AMM Implementation
 **Goal**: Pool and Factory contracts implement constant product AMM with security patterns
@@ -145,7 +145,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation Contracts | 0/TBD | Not started | - |
+| 1. Foundation Contracts | 0/1 | Planned | - |
 | 2. Core AMM Implementation | 0/TBD | Not started | - |
 | 3. Comprehensive Testing | 0/TBD | Not started | - |
 | 4. Frontend Foundation | 0/TBD | Not started | - |
