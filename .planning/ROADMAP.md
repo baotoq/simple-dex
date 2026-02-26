@@ -82,10 +82,11 @@ Plans:
   2. User can see their token balances for all relevant tokens
   3. User can see pool reserves and current exchange rate
   4. User receives clear feedback on transaction status (pending/success/fail)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] TBD
+- [ ] 04-01-PLAN.md — Scaffold Next.js 15 app with wagmi/RainbowKit providers, ABIs, constants, and wallet connect flow
+- [ ] 04-02-PLAN.md — TokenBalances, PoolStats, and TxStatus components with batched contract reads and responsive layout
 
 ### Phase 5: Swap Functionality
 **Goal**: User can execute token swaps through clean interface with price impact awareness
@@ -151,7 +152,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 1. Foundation Contracts | 1/1 | Complete | 2026-02-16 |
 | 2. Core AMM Implementation | 2/2 | Complete | 2026-02-16 |
 | 3. Comprehensive Testing | 3/3 | Complete | 2026-02-16 |
-| 4. Frontend Foundation | 0/TBD | Not started | - |
+| 4. Frontend Foundation | 0/2 | Not started | - |
 | 5. Swap Functionality | 0/TBD | Not started | - |
 | 6. Liquidity Management | 0/TBD | Not started | - |
 | 7. Educational Features | 0/TBD | Not started | - |
