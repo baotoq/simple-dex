@@ -28,7 +28,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Frontend
 
-- [ ] **FE-01**: User can connect wallet (MetaMask) via wagmi/RainbowKit
+- [x] **FE-01**: User can connect wallet (MetaMask) via wagmi/RainbowKit
 - [ ] **FE-02**: User can swap tokens through a clean swap interface
 - [ ] **FE-03**: User can see price impact before confirming swap
 - [ ] **FE-04**: User can approve tokens for DEX spending (exact amounts)
@@ -114,7 +114,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TS-06 | Phase 3 | Pending |
 | TS-07 | Phase 3 | Pending |
 | TS-08 | Phase 3 | Pending |
-| FE-01 | Phase 4 | Pending |
+| FE-01 | Phase 4 | Complete |
 | FE-07 | Phase 4 | Pending |
 | FE-08 | Phase 4 | Pending |
 | FE-09 | Phase 4 | Pending |
