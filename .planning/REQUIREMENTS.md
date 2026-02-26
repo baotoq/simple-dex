@@ -34,9 +34,9 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **FE-04**: User can approve tokens for DEX spending (exact amounts)
 - [ ] **FE-05**: User can add liquidity to a pool with both tokens
 - [ ] **FE-06**: User can remove liquidity by burning LP tokens
-- [ ] **FE-07**: User can see their token balances for all relevant tokens
-- [ ] **FE-08**: User can see pool reserves and current exchange rate
-- [ ] **FE-09**: User receives clear feedback on transaction status (pending/success/fail)
+- [x] **FE-07**: User can see their token balances for all relevant tokens
+- [x] **FE-08**: User can see pool reserves and current exchange rate
+- [x] **FE-09**: User receives clear feedback on transaction status (pending/success/fail)
 - [ ] **FE-10**: User can see the x*y=k math behind each swap calculation (educational mode)
 - [ ] **FE-11**: User can see before/after reserves when previewing a swap
 - [ ] **FE-12**: User can calculate impermanent loss for different price scenarios
@@ -115,9 +115,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TS-07 | Phase 3 | Pending |
 | TS-08 | Phase 3 | Pending |
 | FE-01 | Phase 4 | Complete |
-| FE-07 | Phase 4 | Pending |
-| FE-08 | Phase 4 | Pending |
-| FE-09 | Phase 4 | Pending |
+| FE-07 | Phase 4 | Complete |
+| FE-08 | Phase 4 | Complete |
+| FE-09 | Phase 4 | Complete |
 | FE-02 | Phase 5 | Pending |
 | FE-03 | Phase 5 | Pending |
 | FE-04 | Phase 5 | Pending |

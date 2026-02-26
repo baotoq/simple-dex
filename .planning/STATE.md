@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-02-26T09:34:22.712Z"
+last_updated: "2026-02-26T09:39:01Z"
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 8
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 
 ## Current Position
 
-Phase: 4 of 8 (Frontend Foundation) -- In Progress
-Plan: 1 of 2 in current phase -- COMPLETE
-Status: Phase 4, Plan 1 complete (Next.js scaffold + wagmi/RainbowKit providers)
-Last activity: 2026-02-26 — Phase 4 Plan 1 executed (2 tasks, 24 files)
+Phase: 4 of 8 (Frontend Foundation) -- COMPLETE
+Plan: 2 of 2 in current phase -- COMPLETE
+Status: Phase 4 complete (TokenBalances, PoolStats, TxStatus components + responsive home page)
+Last activity: 2026-02-26 — Phase 4 Plan 2 executed (2 tasks, 5 files)
 
-Progress: [█████░░░░░] 44%
+Progress: [██████░░░░] 50%
 
 ## Performance Metrics
 
@@ -43,11 +43,11 @@ Progress: [█████░░░░░] 44%
 | 01-foundation-contracts | 1 | 4 min | 4 min |
 | 02-core-amm-implementation | 2 | 10 min | 5 min |
 | 03-comprehensive-testing | 3 | 18 min | 6 min |
-| 04-frontend-foundation | 1 | 6 min | 6 min |
+| 04-frontend-foundation | 2 | 9 min | 4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (5min), 03-01 (5min), 03-02 (10min), 03-03 (3min), 04-01 (6min)
-- Trend: Stable execution pace
+- Last 5 plans: 03-01 (5min), 03-02 (10min), 03-03 (3min), 04-01 (6min), 04-02 (3min)
+- Trend: Stable, fast execution pace
 
 *Updated after each plan completion*
 
@@ -77,6 +77,9 @@ Recent decisions affecting current work:
 - [Phase 04-frontend-foundation]: Next.js 16.1.6 with React 19 used (newer than planned 15.x, fully compatible with wagmi/RainbowKit v2)
 - [Phase 04-frontend-foundation]: Pool ABI getAmountOut corrected to 3 args (amountIn, reserveIn, reserveOut) matching actual Pool.sol
 - [Phase 04-frontend-foundation]: Providers pattern: WagmiProvider > QueryClientProvider > RainbowKitProvider in client component
+- [Phase 04-frontend-foundation 04-02]: tsconfig target updated ES2017->ES2020 for BigInt literal support (required by wagmi/viem)
+- [Phase 04-frontend-foundation 04-02]: PoolStats determines token order at runtime by comparing token0/token1 addresses to WETH_ADDRESS
+- [Phase 04-frontend-foundation 04-02]: TxStatus exports QueryStatus helper for read query loading/error states across Phase 4+ components
 
 ### Pending Todos
 
@@ -88,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-26 — Phase 4 Plan 1 execution
-Stopped at: Completed 04-frontend-foundation-01-PLAN.md (Task 1 + Task 2)
-Resume file: .planning/phases/04-frontend-foundation/04-01-SUMMARY.md
+Last session: 2026-02-26 — Phase 4 Plan 2 execution
+Stopped at: Completed 04-02-PLAN.md (Task 1 + Task 2) — Phase 4 complete
+Resume file: .planning/phases/04-frontend-foundation/04-02-SUMMARY.md
